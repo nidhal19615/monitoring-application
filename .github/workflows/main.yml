@@ -3,7 +3,7 @@ name: monitoring CI CD
 on:
   push:
     branches:
-      - staging
+      - main
 
 env:
   AZURE_WEBAPP_NAME: monitoring-application
@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: "Checkout GitHub Action"
-        uses: actions/checkout@develop
+        uses: actions/checkout@main
 
       - uses: azure/login@v1
         with:
