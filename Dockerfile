@@ -1,16 +1,16 @@
- FROM node AS build
+ FROM node:alpine
  WORKDIR /app
 
  COPY package*.json ./
 
  #RUN npm install
 
- RUN npm install --legacy-peer-deps --force
+ RUN npm install --force
  
-  COPY . .
+ COPY . .
 
 
- RUN npm run build --prod
+ RUN npm run build
 
  EXPOSE 3000
 

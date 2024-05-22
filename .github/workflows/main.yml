@@ -5,38 +5,18 @@ on:
     branches:
       - main
 
-env:
-  AZURE_WEBAPP_NAME: monitoring-application
-  AZURE_WEBAPP_PACKAGE_PATH: "."
-  NODE_VERSION: "18.x"
-
 jobs:
-  build-and-deploy:
+  publish_image:
     runs-on: ubuntu-latest
+
     steps:
-      - name: "Checkout GitHub Action"
-        uses: actions/checkout@main
-
-      - uses: azure/login@v1
-        with:
-          creds: ${{ secrets.AZURE_CREDENTIALS }}
-
-      - name: Setup Node ${{ env.NODE_VERSION }}
-        uses: actions/setup-node@v4
-        with:
-          node-version: ${{ env.NODE_VERSION }}
-
-      - name: "npm install, build, and test"
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: build
         run: |
-          npm install
-        working-directory: "."
+          docker build -t pfe .
 
-      - uses: azure/webapps-deploy@v3
-        with:
-          app-name: ${{ env.AZURE_WEBAPP_NAME }}
-          package: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
-
-      # Azure logout
-      - name: logout
+      - name: publish
         run: |
-          az logout
+          docker login -u nidhal2 -p ${{secretes.DOCKER_HUB_TOKEN}}
+          docker push nidhal2/pfe
