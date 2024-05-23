@@ -20,3 +20,9 @@ jobs:
         run: |
           docker login -u nidhal2 -p ${{secrets.DOCKER_HUB_TOKEN}}
           docker push nidhal2/pfe
+
+      - name: 'Login via Azure CLI'
+        uses: azure/login@v1
+        with:
+            creds: ${{ secrets.AZURE_CREDENTIALS }}
+      
