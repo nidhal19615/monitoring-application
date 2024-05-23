@@ -10,7 +10,7 @@ import "assets/demo/demo.css";
 import "assets/css/nucleo-icons.css";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 ////import Kc from "./Kc.js";
-//jfnif
+//jfnifjuhud
 import ThemeContextWrapper from "./components/ThemeWrapper/ThemeWrapper";
 import BackgroundColorWrapper from "./components/BackgroundColorWrapper/BackgroundColorWrapper";
 
@@ -25,8 +25,9 @@ root.render(
           <Route path="/admin/*" element={<AdminLayout />} />
           <Route path="/rtl/*" element={<RTLLayout />} />
           <Route
-              //path="/" element={<App keycloak={Kc}/>} 
-             path="*" element={<Navigate to="/admin/dashboard" replace />}
+            //path="/" element={<App keycloak={Kc}/>}
+            path="*"
+            element={<Navigate to="/admin/dashboard" replace />}
           />
         </Routes>
       </BrowserRouter>
