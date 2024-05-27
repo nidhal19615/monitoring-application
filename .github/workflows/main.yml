@@ -34,4 +34,4 @@ jobs:
           kubernetesCluster: cluster-pfe
           namespace: default
           manifests: |
-            https://github.com/nidhal19615/monitoring-application/blob/main/react.yml
+            react.yml
