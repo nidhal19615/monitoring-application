@@ -22,14 +22,14 @@ jobs:
           docker login -u nidhal2 -p ${{secrets.DOCKER_HUB_TOKEN}}
           docker push nidhal2/pfe
 
-      - name: Check Azure Login
-        run: |
-          az account show
       - name: "Login via Azure CLI"
         id: azure_login
         uses: azure/login@v1
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
+      - name: Check Azure Login
+        run: |
+          az account show
 
       - name: Get AKS Credentials
         if: steps.azure_login.outcome == 'success' # Only get credentials if Azure login was successful
