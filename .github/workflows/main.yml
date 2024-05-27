@@ -32,7 +32,5 @@ jobs:
           azureCredentials: ${{ secrets.AZURE_CREDENTIALS }}
           azureResourceGroup: ressource-pfe
           kubernetesCluster: cluster-pfe
-
-          command: apply
-          inline: |
+          run: |
             kubectl apply -f react.yaml
