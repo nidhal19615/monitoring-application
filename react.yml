@@ -17,7 +17,7 @@ spec:
           image: nidhal2/pfe:latest
           imagePullPolicy: Always
           ports:
-            - containerPort: 4600
+            - containerPort: 4000
       imagePullSecrets:
         - name: cli_token
 ---
