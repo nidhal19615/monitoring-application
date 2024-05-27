@@ -36,3 +36,4 @@ spec:
   type: LoadBalancer
   selector:
     app: react
+    loadBalancerIP: 4.176.17.161
