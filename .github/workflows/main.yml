@@ -26,9 +26,12 @@ jobs:
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
-      - name: Déploiement K8S
+      - name: K8S Deploy
         uses: azure/k8s-deploy@v1
         with:
+          azureCredentials: ${{ secrets.AZURE_CREDENTIALS }}
+          azureResourceGroup: ressource-pfe
+          kubernetesCluster: cluster-pfe
           namespace: default
           manifests: |
             https://github.com/nidhal19615/monitoring-application/blob/main/react.yml
