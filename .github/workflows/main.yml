@@ -35,3 +35,4 @@ jobs:
           namespace: default
           manifests: |
             react.yml
+          arguments: --validate=false
