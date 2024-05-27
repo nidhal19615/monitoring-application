@@ -30,10 +30,9 @@ metadata:
 spec:
   ports:
     - name: http
-      port: 4600
+      port: 4000
       protocol: TCP
-      targetPort: 4600
-      nodePort: 30000
-  type: NodePort
+      targetPort: 4000
+  type: LoadBalancer
   selector:
     app: react
