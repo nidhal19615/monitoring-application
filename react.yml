@@ -33,6 +33,7 @@ spec:
       port: 4600
       protocol: TCP
       targetPort: 4600
-  type: LoadBalancer
+      nodePort: 30000
+  type: NodePort
   selector:
     app: react
