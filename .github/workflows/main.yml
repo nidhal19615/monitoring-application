@@ -12,6 +12,7 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
       - name: build
         run: |
           docker build  -t nidhal2/pfe:latest .
@@ -21,12 +22,17 @@ jobs:
           docker login -u nidhal2 -p ${{secrets.DOCKER_HUB_TOKEN}}
           docker push nidhal2/pfe
 
+      - name: Check Azure Login
+        run: |
+          az account show
       - name: "Login via Azure CLI"
+        id: azure_login
         uses: azure/login@v1
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
       - name: K8S Deploy
+        if: steps.azure_login.outcome == 'success' # Only deploy if Azure login was successful
         uses: azure/k8s-deploy@v1
         with:
           namespace: default
