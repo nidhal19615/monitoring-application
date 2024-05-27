@@ -31,5 +31,4 @@ jobs:
         with:
           namespace: default
           manifests: |
-            ./react.yml
-          arguments: --validate=false
+            black-dashboard-react-master2/react.yml
