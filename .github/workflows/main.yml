@@ -26,6 +26,13 @@ jobs:
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
-      - name: Apply Kubernetes configuration
-        run: |
-          kubectl apply -f react.yml
+      - name: K8S Deploy
+        uses: azure/k8s-deploy@v1
+        with:
+          azureCredentials: ${{ secrets.AZURE_CREDENTIALS }}
+          azureResourceGroup: ressource-pfe
+          kubernetesCluster: cluster-pfe
+
+          command: apply
+          inline: |
+            kubectl apply -f react.yaml
