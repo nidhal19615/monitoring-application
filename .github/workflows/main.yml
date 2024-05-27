@@ -31,4 +31,4 @@ jobs:
         with:
           namespace: default
           manifests: |
-            black-dashboard-react-master2/react.yml
+            react.yml
