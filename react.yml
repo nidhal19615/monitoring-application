@@ -17,7 +17,7 @@ spec:
           image: nidhal2/pfe:latest
           imagePullPolicy: Always
           ports:
-            - containerPort: 4000
+            - containerPort: 4600
       imagePullSecrets:
         - name: cli_token
 ---
@@ -30,9 +30,9 @@ metadata:
 spec:
   ports:
     - name: http
-      port: 4000
+      port: 4600
       protocol: TCP
-      targetPort: 4000
+      targetPort: 4600
   type: LoadBalancer
   selector:
     app: react
