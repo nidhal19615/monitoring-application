@@ -28,10 +28,11 @@ metadata:
     app: react
   name: react-app
 spec:
-  type: NodePort
   ports:
     - name: http
       port: 4600
       protocol: TCP
       targetPort: 4600
-      nodePort: 30501
+  type: LoadBalancer
+  selector:
+    app: react
