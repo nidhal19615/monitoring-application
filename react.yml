@@ -28,12 +28,10 @@ metadata:
     app: react
   name: react-app
 spec:
+  type: NodePort
   ports:
     - name: http
       port: 4600
       protocol: TCP
       targetPort: 4600
-      nodePort: 30080 # spécifiez votre NodePort souhaité ici
-  type: NodePort
-  selector:
-    app: react
+      nodePort: 30501
