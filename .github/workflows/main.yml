@@ -42,3 +42,4 @@ jobs:
           namespace: default
           manifests: |
             react.yml
+            

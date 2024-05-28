@@ -1,38 +1,19 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: react-deployment
+  name: react-app-deployment
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: react
+      app: react-app
   template:
     metadata:
       labels:
-        app: react
+        app: react-app
     spec:
       containers:
-        - name: react
+        - name: react-app-container
           image: nidhal2/pfe:latest
-          imagePullPolicy: Always
           ports:
-            - containerPort: 3000
-      imagePullSecrets:
-        - name: cli_token
----
-apiVersion: v1
-kind: Service
-metadata:
-  labels:
-    app: react
-  name: react-app
-spec:
-  ports:
-    - name: http
-      port: 80
-      protocol: TCP
-      targetPort: 8080
-  type: LoadBalancer
-  selector:
-    app: react
+            - containerPort: 3000 # Adjust the port as needed
