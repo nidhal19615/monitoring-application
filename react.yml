@@ -16,4 +16,4 @@ spec:
         - name: react-app-container
           image: nidhal2/pfe:latest
           ports:
-            - containerPort: 3000 # Adjust the port as needed
+            - containerPort: 3000 # Adjust the port as nkejkeeeded
