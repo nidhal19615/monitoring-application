@@ -42,4 +42,8 @@ jobs:
           namespace: default
           manifests: |
             react.yml
-          #  service.yml
+            service.yml
+            postgres-deployment.yml
+            postgres-service.yml
+            keycloak-deployment.yml
+            keyclokservice.yml

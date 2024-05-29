@@ -17,16 +17,4 @@ spec:
           image: nidhal2/pfe:latest
           ports:
             - containerPort: 3000
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: react-app-service
-spec:
-  selector:
-    app: react-app
-  ports:
-    - protocol: TCP
-      port: 80
-      targetPort: 3000
-  type: LoadBalancer
+
