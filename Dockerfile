@@ -3,7 +3,8 @@
 
  COPY package*.json ./
 
- #RUN npm install
+ #RUN npm installhhh
+ 
 
  RUN npm install --force
  

@@ -16,4 +16,4 @@ spec:
         - name: react-app-container
           image: nidhal2/pfe:latest
           ports:
-            - containerPort: 3000 # Adjust thppe port as nkejkeeededrjnr
+            - containerPort: 3000 # Adjust thppe port as nkejkeeededrjnrkjnbn
