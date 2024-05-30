@@ -38,3 +38,15 @@ spec:
       volumes:
       - name: keycloak-data
         emptyDir: {}
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: keycloak
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 8080
+  selector:
+    app: keycloak
