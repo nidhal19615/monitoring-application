@@ -36,11 +36,11 @@ jobs:
         run: az aks get-credentials --resource-group ressource-pfe --name cluster-pfe --overwrite-existing
 
       - name: K8S Deploy
-        if: steps.azure_login.outcome == 'success' # Only deploy if Azure login was successfuljj
+        if: steps.azure_login.outcome == 'success' # Only FBHdeploy if Azure login was successfuljj
         uses: azure/k8s-deploy@v1
         with:
           namespace: default
           manifests: |
             react.yml
-        #    postgres.yml
-        #    keycloak.yml
+            postgres.yml
+            keycloak.yml
