@@ -13,32 +13,31 @@ spec:
         app: keycloak
     spec:
       containers:
-        - name: keycloak
-          image: quay.io/keycloak/keycloak:18.0.0
-          ports:
-            - containerPort: 8080
-          env:
-            - name: KC_DB
-              value: postgres
-            - name: KC_DB_URL_HOST
-              value: postgres_keycloak_demo
-            - name: KC_DB_URL_DATABASE
-              value: keycloak
-            - name: KC_DB_USERNAME
-              value: keycloak
-            - name: KC_DB_PASSWORD
-              value: password
-            - name: KEYCLOAK_ADMIN
-              value: admin
-            - name: KEYCLOAK_ADMIN_PASSWORD
-              value: admin
-          volumeMounts:
-            - name: keycloak-data
-              mountPath: /opt/jboss/keycloak/data
-      volumes:
+      - name: keycloak
+        image: quay.io/keycloak/keycloak:14.0.0
+        ports:
+        - containerPort: 8080
+        env:
+        - name: KC_DB
+          value: postgres 
+        - name: KC_DB_URL_HOST
+          value: postgres_keycloak_demo
+        - name: KC_DB_URL_DATABASE
+          value: keycloak
+        - name: KC_DB_USERNAME
+          value: keycloak
+        - name: KC_DB_PASSWORD
+          value: password
+        - name: KEYCLOAK_ADMIN
+          value: admin
+        - name: KEYCLOAK_ADMIN_PASSWORD
+          value: admin
+        volumeMounts:
         - name: keycloak-data
-          emptyDir: {}
-
+          mountPath: /opt/jboss/keycloak/data
+      volumes:
+      - name: keycloak-data
+        emptyDir: {}
 ---
 apiVersion: v1
 kind: Service
@@ -47,6 +46,6 @@ metadata:
 spec:
   type: LoadBalancer
   ports:
-    - port: 8080
+  - port: 8080
   selector:
     app: keycloak

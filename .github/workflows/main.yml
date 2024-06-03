@@ -32,7 +32,7 @@ jobs:
           az account show
 
       - name: Get AKS Credentials
-        if: steps.azure_login.outcome == 'success' # Only get credentials if Azure login was successful
+        if: steps.azure_login.outcome == 'success' # Onlyy get credentials if Azure login was successful
         run: az aks get-credentials --resource-group ressource-pfe --name cluster-pfe --overwrite-existing
 
       - name: K8S Deploy

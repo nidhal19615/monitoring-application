@@ -1,36 +1,36 @@
+kind: Deployment
 apiVersion: apps/v1
-kind: StatefulSet
 metadata:
-  name: postgresql-db
+  name: postgresql
 spec:
-  serviceName: postgresql-db-service
+  replicas: 1
   selector:
     matchLabels:
-      app: postgresql-db
-  replicas: 1
+      app: postgresql
   template:
     metadata:
       labels:
-        app: postgresql-db
+        app: postgresql
     spec:
       containers:
-        - name: postgresql-db
-          image: postgres:15
-          volumeMounts:
-            - mountPath: /data
-              name: cache-volume
+        - name: postgresql
+          image: postgres:12
+          ports:
+            - containerPort: 5432
           env:
-            - name: POSTGRES_USER
-              value: testuser
-            - name: POSTGRES_PASSWORD
-              value: testpassword
-            - name: PGDATA
-              value: /data/pgdata
             - name: POSTGRES_DB
               value: keycloak
+            - name: POSTGRES_USER
+              value: keycloak
+            - name: POSTGRES_PASSWORD
+              value: password
+          volumeMounts:
+            - name: postgresql-data
+              mountPath: /var/lib/postgresql/data
       volumes:
-        - name: cache-volume
+        - name: postgresql-data
           emptyDir: {}
+
 ---
 apiVersion: v1
 kind: Service
@@ -38,8 +38,8 @@ metadata:
   name: postgres-db
 spec:
   selector:
-    app: postgresql-db
+    app: postgresql
   type: LoadBalancer
   ports:
-  - port: 5432
-    targetPort: 5432
+    - port: 5432
+      targetPort: 5432
