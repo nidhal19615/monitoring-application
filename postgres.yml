@@ -1,43 +1,21 @@
-apiVersion: apps/v1
-kind: Deployment
+apiVersion: k8s.keycloak.org/v2alpha1
+kind: Keycloak
 metadata:
-  name: postgresql
+  name: postgres
 spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      app: postgresql
-  template:
-    metadata:
-      labels:
-        app: postgresql
-    spec:
-      containers:
-        - name: postgresql
-          image: postgres:12
-          ports:
-            - containerPort: 5432
-          env:
-            - name: POSTGRES_DB
-              value: keycloak
-            - name: POSTGRES_USER
-              value: keycloak
-            - name: POSTGRES_PASSWORD
-              value: password
-          volumeMounts:
-            - name: postgresql-data
-              mountPath: /var/lib/postgresql/data
-      volumes:
-        - name: postgresql-data
-          emptyDir: {}
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: postgresql
-spec:
-  type: LoadBalancer
-  ports:
-    - port: 5432
-  selector:
-    app: postgresql
+  instances: 1
+  db:
+    vendor: postgres
+    host: postgres-db
+    usernameSecret:
+      name: keycloak-db-secret
+      key: username
+    passwordSecret:
+      name: keycloak-db-secret
+      key: password
+  http:
+    tlsSecret: example-tls-secret
+  hostname:
+    hostname: test.keycloak.org
+  proxy:
+    headers: xforwarded # double check your reverse proxy sets and overwrites the X-Forwarded-* headers
