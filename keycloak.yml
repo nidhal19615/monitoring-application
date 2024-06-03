@@ -19,19 +19,19 @@ spec:
             - containerPort: 8080
           env:
             - name: KC_DB
-              value: postgres
+              value: "postgres"
             - name: KC_DB_URL_HOST
-              value: postgres_keycloak_demo
+              value: "98.66.184.55:5432"
             - name: KC_DB_URL_DATABASE
-              value: keycloak
+              value: "keycloak"
             - name: KC_DB_USERNAME
-              value: keycloak
+              value: "keycloak"
             - name: KC_DB_PASSWORD
-              value: password
+              value: "admin"
             - name: KEYCLOAK_ADMIN
-              value: admin
+              value: "admin"
             - name: KEYCLOAK_ADMIN_PASSWORD
-              value: admin
+              value: "admin"
           volumeMounts:
             - name: keycloak-data
               mountPath: /opt/jboss/keycloak/data
