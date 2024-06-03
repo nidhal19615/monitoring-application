@@ -13,53 +13,31 @@ spec:
         app: keycloak
     spec:
       containers:
-        - name: keycloak
-          image: quay.io/keycloak/keycloak:14.0.0
-          ports:
-            - containerPort: 8080
-          env:
-            - name: KC_DB
-              value: postgres
-            - name: KC_DB_URL_HOST
-              value: postgres_keycloak_demo
-            - name: KC_DB_URL_DATABASE
-              value: keycloak
-            - name: KC_DB_USERNAME
-              value: keycloak
-            - name: KC_DB_PASSWORD
-              value: password
-            - name: KEYCLOAK_ADMIN
-              value: admin
-            - name: KEYCLOAK_ADMIN_PASSWORD
-              value: admin
-          volumeMounts:
-            - name: keycloak-data
-              mountPath: /opt/jboss/keycloak/data
-            - name: init-script
-              mountPath: /opt/jboss/keycloak/init
-          command: ["/opt/jboss/keycloak/init/create-admin-user.sh"]
-      volumes:
+      - name: keycloak
+        image: quay.io/keycloak/keycloak:14.0.0
+        ports:
+        - containerPort: 8080
+        env:
+        - name: KC_DB
+          value: postgres 
+        - name: KC_DB_URL_HOST
+          value: postgres_keycloak_demo
+        - name: KC_DB_URL_DATABASE
+          value: keycloak
+        - name: KC_DB_USERNAME
+          value: keycloak
+        - name: KC_DB_PASSWORD
+          value: password
+        - name: KEYCLOAK_ADMIN
+          value: admin
+        - name: KEYCLOAK_ADMIN_PASSWORD
+          value: admin
+        volumeMounts:
         - name: keycloak-data
-          emptyDir: {}
-        - name: init-script
-          configMap:
-            name: keycloak-init-script
-
----
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: keycloak-init-script
-data:
-  create-admin-user.sh: |
-    #!/bin/bash
-    /opt/jboss/keycloak/bin/kc.sh start-dev &
-    until $(curl --output /dev/null --silent --head --fail http://localhost:8080); do
-      printf '.'
-      sleep 5
-    done
-    /opt/jboss/keycloak/bin/kc.sh create admin --user $KEYCLOAK_ADMIN --password $KEYCLOAK_ADMIN_PASSWORD
-    fg
+          mountPath: /opt/jboss/keycloak/data
+      volumes:
+      - name: keycloak-data
+        emptyDir: {}
 
 ---
 apiVersion: v1
@@ -69,6 +47,6 @@ metadata:
 spec:
   type: LoadBalancer
   ports:
-    - port: 8080
+  - port: 8080
   selector:
     app: keycloak
