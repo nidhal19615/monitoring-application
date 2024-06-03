@@ -55,7 +55,7 @@ spec:
         - name: KEYCLOAK_HTTPS_PORT
           value: "443"
         - name : KEYCLOAK_HOSTNAME
-          value : keycloak.harshmanvar.tk #replace with ingress URL
+          value : keycloak.harshmanvar.tk #replace with ingress URLlll
         ports:
         - name: http
           containerPort: 8080
