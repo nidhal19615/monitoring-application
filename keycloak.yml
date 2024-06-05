@@ -1,8 +1,10 @@
 apiVersion: k8s.keycloak.org/v2alpha1
 kind: Keycloak
 metadata:
-  name: example-kc
+  name: keycloak
 spec:
+  ingress:
+    enabled: false
   instances: 1
   db:
     vendor: postgres
@@ -13,12 +15,9 @@ spec:
     passwordSecret:
       name: keycloak-db-secret2
       key: password
-  ingress:
-    enabled: false
   http:
     tlsSecret: example-tls-secret2
   hostname:
     hostname: test.keycloak.org
   proxy:
     headers: xforwarded # double check your reverse proxy sets and overwrites the X-Forwarded-* headers
-
