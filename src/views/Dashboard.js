@@ -66,7 +66,7 @@ ks.init({
       console.log("Keycloak", ks);
       console.log("Access Token", ks.token);
 
-      //httpClient.defaults.headers.common[
+      ///httpClient.defaults.headers.common[
        // "Authorization"
       //] = `Bearer ${ks.token}`;
 
