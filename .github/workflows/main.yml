@@ -15,7 +15,7 @@ jobs:
 
       - name: build
         run: |
-          docker build  -t nidhal2/pfe:latest .
+          docker build --no-cache -t nidhal2/pfe:latest .
 
       - name: publish
         run: |
@@ -42,5 +42,5 @@ jobs:
           namespace: default
           manifests: |
             react.yml
-         #   postgres.yml
+          #   postgres.yml
           #  keycloak.yml
