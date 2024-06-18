@@ -1,7 +1,7 @@
 import Keycloak from "keycloak-js";
 
 const kcConfig = {
-  url: "https://10.0.141.223:8443/auth", // /Replace with your actual base URL
+  url: "http://98.66.206.49/auth/", // /Replace with your actual base URL
   realm: "cost-dashbord", // Replace with your actual realm name
   clientId: "react-app",
 };
