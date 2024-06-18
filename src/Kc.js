@@ -1,13 +1,11 @@
 import Keycloak from "keycloak-js";
 
-const Kc = new Keycloak({
-  /// url: "http://10.224.0.29:8080/auth",
-  // url: "http://10.224.0.29:8443/auth",
-  //url: "http://98.66.206.49:80",
-
-  url: "https://my-keycloak-http:8443/auth",
-  realm: "cost-dashbord",
+const kcConfig = {
+  url: "https://10.0.141.223:8443/auth", // Replace with your actual base URL
+  realm: "cost-dashbord", // Replace with your actual realm name
   clientId: "react-app",
-});
+};
 
-export default Kc;
+const keycloak = new Keycloak(kcConfig);
+
+export default keycloak;
