@@ -78,6 +78,7 @@ ks.init({
   },
   () => {
     console.error("Authentication Failed");
+    console.log(error);
   }
 );
 
