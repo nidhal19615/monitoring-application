@@ -35,7 +35,7 @@ function AdminNavbar(props) {
       window.removeEventListener("resize", updateColor);
     };
   });
-  console.log(Kc.authenticated);
+
   const updateColor = () => {
     if (window.innerWidth < 993 && collapseOpen) {
       setcolor("bg-white");

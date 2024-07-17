@@ -51,7 +51,6 @@ import {
 } from "variables/charts.js";
 import ks from "../Kc.js";
 
-console.log("jesuis la");
 
 ks.init({
   onLoad: "login-required",
@@ -63,9 +62,7 @@ ks.init({
       window.location.reload();
     } else {
       console.info("Authenticated");
-      console.log("auth", auth);
-      console.log("Keycloak", ks);
-      console.log("Access Token", ks.token);
+
 
       ///httpClient.defaults.headers.common[
       // "Authorization"

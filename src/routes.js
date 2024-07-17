@@ -16,9 +16,9 @@
 
 */
 import Dashboard from "views/Dashboard.js";
- import Map from "views/Map.js";
-import Notifications from "views/Notifications.js";
- import Typography from "views/Typography.js";
+import PrometheusChart from "views/PrometheusChart.js";
+import CpuandRamChart from "views/CpuandRamChart.js";
+import Typography from "views/Typography.js";
 import UserProfile from "views/UserProfile.js";
 
 var routes = [
@@ -30,21 +30,21 @@ var routes = [
     component: <Dashboard />,
     layout: "/admin",
   },
- 
+
   {
-    path: "/map",
-    name: "Map",
+    path: "/metrics",
+    name: "Prometheus Chart",
     rtlName: "خرائط",
     icon: "tim-icons icon-pin",
-    component: <Map />,
+    component: <PrometheusChart />,
     layout: "/admin",
   },
   {
-    path: "/notifications",
-    name: "Notifications",
+    path: "/CpuandRamChart",
+    name: "CpuandRamChart",
     rtlName: "إخطارات",
     icon: "tim-icons icon-bell-55",
-    component: <Notifications />,
+    component: <CpuandRamChart />,
     layout: "/admin",
   },
   {
@@ -55,7 +55,7 @@ var routes = [
     component: <UserProfile />,
     layout: "/admin",
   },
- 
+
   {
     path: "/typography",
     name: "Typography",
@@ -64,6 +64,5 @@ var routes = [
     component: <Typography />,
     layout: "/admin",
   },
-  
 ];
 export default routes;
