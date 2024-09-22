@@ -128,7 +128,7 @@ const CpuandRamChart = () => {
     return data;
   };
 
-  // Générer les données pour le graphique de prix RAM
+  /// Générer les données pour le graphique de prix RAM
   const generateRAMPricingData = () => {
     const data = [];
     const currentTime = dayjs();
