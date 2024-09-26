@@ -24,6 +24,7 @@ root.render(
         <Routes>
           <Route path="/admin/*" element={<AdminLayout />} />
           <Route path="/rtl/*" element={<RTLLayout />} />
+
           <Route
             //path="/" element={<App keycloak={Kc}/>}
             path="*"
