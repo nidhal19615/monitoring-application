@@ -22,21 +22,11 @@ import Typography from "views/Typography.js";
 import UserProfile from "views/UserProfile.js";
 
 var routes = [
-  
   {
     path: "/dashboard",
     name: "Dashboard",
     rtlName: "لوحة القيادة",
     icon: "tim-icons icon-chart-pie-36",
-    component: <Dashboard />,
-    layout: "/admin",
-  },
-
-  {
-    path: "/metrics",
-    name: "Prometheus Chart",
-    rtlName: "خرائط",
-    icon: "tim-icons icon-pin",
     component: <PrometheusChart />,
     layout: "/admin",
   },
@@ -58,7 +48,7 @@ var routes = [
     layout: "/admin",
   },
   */
-/*
+  /*
   {
     path: "/typography",
     name: "Typography",
