@@ -15,12 +15,12 @@ jobs:
 
       - name: build
         run: |
-          docker build --no-cache -t nidhal2/pfe:latest .
+          docker build --no-cache -t nidhal2/pfe:v1 .
 
       - name: publish
         run: |
           docker login -u nidhal2 -p ${{secrets.DOCKER_HUB_TOKEN}}
-          docker push nidhal2/pfe
+          docker push nidhal2/pfe:v1
 
       - name: "Login via Azure CLI"
         id: azure_login
