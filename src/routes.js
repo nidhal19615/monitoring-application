@@ -22,6 +22,7 @@ import Typography from "views/Typography.js";
 import UserProfile from "views/UserProfile.js";
 
 var routes = [
+  
   {
     path: "/dashboard",
     name: "Dashboard",
@@ -47,6 +48,7 @@ var routes = [
     component: <CpuandRamChart />,
     layout: "/admin",
   },
+  /*
   {
     path: "/user-profile",
     name: "User Profile",
@@ -55,7 +57,8 @@ var routes = [
     component: <UserProfile />,
     layout: "/admin",
   },
-
+  */
+/*
   {
     path: "/typography",
     name: "Typography",
@@ -64,5 +67,6 @@ var routes = [
     component: <Typography />,
     layout: "/admin",
   },
+  */
 ];
 export default routes;

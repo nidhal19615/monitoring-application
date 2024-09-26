@@ -27,7 +27,7 @@ root.render(
           <Route
             //path="/" element={<App keycloak={Kc}/>}
             path="*"
-            element={<Navigate to="/admin/dashboard" replace />}
+            element={<Navigate to="/admin/metrics" replace />}
           />
         </Routes>
       </BrowserRouter>
