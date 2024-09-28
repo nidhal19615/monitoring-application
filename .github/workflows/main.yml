@@ -15,32 +15,33 @@ jobs:
 
       - name: build
         run: |
-          docker build --no-cache -t nidhal2/pfe:v1 .
+          docker build --no-cache -t nidhal2/pfe:1.0 .
 
       - name: publish
         run: |
           docker login -u nidhal2 -p ${{secrets.DOCKER_HUB_TOKEN}}
-          docker push nidhal2/pfe:v1
+          docker push nidhal2/pfe:1.0
 
-      - name: "Login via Azure CLI"
-        id: azure_login
-        uses: azure/login@v1
-        with:
-          creds: ${{ secrets.AZURE_CREDENTIALS }}
-      - name: Check Azure Login
-        run: |
-          az account show
+  #    - name: "Login via Azure CLI"
+  #     id: azure_login
+  #     uses: azure/login@v1
 
-      - name: Get AKS Credentials
-        if: steps.azure_login.outcome == 'success' # Onlyy get credentials if Azure login was successfu
-        run: az aks get-credentials --resource-group ressource-pfe --name cluster-pfe --overwrite-existing
+#        with:
+#          creds: ${{ secrets.AZURE_CREDENTIALS }}
+#      - name: Check Azure Login
+#        run: |
+#          az account show#
 
-      - name: K8S Deploy
-        if: steps.azure_login.outcome == 'success' # Only FBHdeployhh if Azkkure login was successfuljj
-        uses: azure/k8s-deploy@v1
-        with:
-          namespace: default
-          manifests: |
-            manifests/react.yml
-          #   postgres.yml
-          #  keycloak.yml
+#    - name: Get AKS Credentials
+#      if: steps.azure_login.outcome == 'success' # Onlyy get credentials if Azure login was successfu
+#      run: az aks get-credentials --resource-group ressource-pfe --name cluster-pfe --overwrite-existing
+
+#    - name: K8S Deploy
+#     if: steps.azure_login.outcome == 'success' # Only FBHdeployhh if Azkkure login was successfuljj
+#    uses: azure/k8s-deploy@v1
+#    with:
+#      namespace: default
+#     manifests: |
+#      manifests/react.yml
+#   postgres.yml
+#  keycloak.yml
