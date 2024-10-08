@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: react-app-deployment
 spec:
-  replicas: 3
+  replicas: 2
   selector:
     matchLabels:
       app: react-app
@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: react-app-container
-          image: nidhal2/pfe:2.0
+          image: nidhal2/pfe:3.0
           ports:
             - containerPort: 3000
 
