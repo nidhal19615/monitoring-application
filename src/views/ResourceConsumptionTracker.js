@@ -1,62 +1,63 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
-import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
-import Typography from "@mui/material/Typography";
-import Box from "@mui/material/Box";
-import TextField from "@mui/material/TextField";
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import {
-  LineChart,
-  Line,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  Legend,
-  ResponsiveContainer,
-} from "recharts";
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-import dayjs from "dayjs";
-import "dayjs/locale/fr";
-import { MenuItem, Select } from "@mui/material";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+  LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer
+} from 'recharts';
+import { TextField, MenuItem } from '@mui/material';
+import dayjs from 'dayjs';
+import 'dayjs/locale/fr'; // Locale en français
 
 const ResourceConsumptionTracker = () => {
+  const [selectedMonth, setSelectedMonth] = useState('');
+  const [selectedWeek, setSelectedWeek] = useState(null);
   const [cpuData, setCpuData] = useState([]);
-  const [selectedMonth, setSelectedMonth] = useState(dayjs().startOf("month")); // Mois sélectionné
-  const [selectedWeek, setSelectedWeek] = useState(null); // Semaine sélectionnée
-  const [weeksInMonth, setWeeksInMonth] = useState([]); // Liste des semaines disponibles
+  
+  // Liste des mois disponibles
+  const months = [
+    { value: '01', label: 'Janvier' },
+    { value: '02', label: 'Février' },
+    { value: '03', label: 'Mars' },
+    { value: '04', label: 'Avril' },
+    { value: '05', label: 'Mai' },
+    { value: '06', label: 'Juin' },
+    { value: '07', label: 'Juillet' },
+    { value: '08', label: 'Août' },
+    { value: '09', label: 'Septembre' },
+    { value: '10', label: 'Octobre' },
+    { value: '11', label: 'Novembre' },
+    { value: '12', label: 'Décembre' }
+  ];
 
-  useEffect(() => {
-    // Calculer les semaines disponibles en fonction du mois sélectionné
-    const startOfMonth = selectedMonth.startOf("month");
-    const endOfMonth = selectedMonth.endOf("month");
-
+  // Fonction pour définir les semaines d'un mois sélectionné
+  const getWeeksInMonth = (month) => {
+    const year = dayjs().year(); // Année actuelle
+    const startOfMonth = dayjs(`${year}-${month}-01`);
+    const endOfMonth = startOfMonth.endOf('month');
+    
     const weeks = [];
-    let startOfWeek = startOfMonth;
-
-    while (startOfWeek.isBefore(endOfMonth)) {
-      let endOfWeek = startOfWeek.add(6, "days").isAfter(endOfMonth)
-        ? endOfMonth
-        : startOfWeek.add(6, "days");
-
+    let currentWeekStart = startOfMonth.startOf('week');
+    while (currentWeekStart.isBefore(endOfMonth)) {
+      const currentWeekEnd = currentWeekStart.endOf('week');
       weeks.push({
-        label: `Semaine du ${startOfWeek.format("DD/MM")} au ${endOfWeek.format(
-          "DD/MM"
-        )}`,
-        startOfWeek: startOfWeek,
-        endOfWeek: endOfWeek,
+        startOfWeek: currentWeekStart,
+        endOfWeek: currentWeekEnd.isBefore(endOfMonth) ? currentWeekEnd : endOfMonth
       });
-
-      startOfWeek = endOfWeek.add(1, "day");
+      currentWeekStart = currentWeekStart.add(1, 'week');
     }
+    return weeks;
+  };
 
-    setWeeksInMonth(weeks);
-    setSelectedWeek(weeks[0]); // Sélectionne par défaut la première semaine
-  }, [selectedMonth]);
+  const handleMonthChange = (event) => {
+    const month = event.target.value;
+    setSelectedMonth(month);
+    setSelectedWeek(null); // Reset de la semaine lorsque le mois change
+  };
+
+  const handleWeekChange = (event) => {
+    const weekIndex = event.target.value;
+    const weeksInMonth = getWeeksInMonth(selectedMonth);
+    setSelectedWeek(weeksInMonth[weekIndex]);
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -70,13 +71,11 @@ const ResourceConsumptionTracker = () => {
         if (endTimestamp > now) {
           setCpuData([]);
         } else {
-          // Fetch CPU Data
           const cpuResponse = await axios.get(
             "http://98.66.205.79/api/v1/query_range",
             {
               params: {
-                query:
-                  "sum by (pod) (container_cpu_usage_seconds_total{image!=''})",
+                query: "sum by (pod) (container_cpu_usage_seconds_total{image!=''})",
                 start: startTimestamp,
                 end: endTimestamp,
                 step: 60,
@@ -91,6 +90,7 @@ const ResourceConsumptionTracker = () => {
             }))
           );
           setCpuData(formattedCpuData);
+          console.log("Formatted CPU Data:", formattedCpuData); // Vérifiez ici les données
         }
       } catch (error) {
         console.error("Erreur lors de la récupération des données :", error);
@@ -100,105 +100,86 @@ const ResourceConsumptionTracker = () => {
     fetchData();
   }, [selectedWeek]);
 
+  // Options de semaines pour le mois sélectionné
+  const weeksInMonth = selectedMonth ? getWeeksInMonth(selectedMonth) : [];
+
   return (
-    <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="fr">
-      <Box
-        display="flex"
-        flexDirection="column"
-        alignItems="center"
-        minHeight="100vh"
-        bgcolor="#f5f5f5"
+    <div>
+      <h2>Suivi de la consommation des ressources</h2>
+
+      {/* Sélection du mois */}
+      <TextField
+        select
+        label="Mois"
+        value={selectedMonth}
+        onChange={handleMonthChange}
+        fullWidth
+        margin="normal"
       >
-        <Box width="80%" maxWidth={800} m="auto" mt={4}>
-          <Card sx={{ width: "100%", boxShadow: 3 }}>
-            <CardContent>
-              <Typography
-                variant="h5"
-                component="div"
-                mb={4}
-                textAlign="center"
-                color="#388e3c"
-              >
-                Suivi de la consommation des ressources (CPU)
-              </Typography>
-              <Box
-                display="flex"
-                justifyContent="center"
-                alignItems="center"
-                mb={4}
-              >
-                <DatePicker
-                  views={["year", "month"]}
-                  label="Sélectionner le mois"
-                  value={selectedMonth}
-                  onChange={(newValue) => setSelectedMonth(newValue)}
-                  renderInput={(params) => (
-                    <TextField {...params} sx={{ marginRight: 2 }} />
-                  )}
-                />
-                <Select
-                  label="Sélectionner la semaine"
-                  value={selectedWeek}
-                  onChange={(e) => setSelectedWeek(e.target.value)}
-                  sx={{ minWidth: 200 }}
-                >
-                  {weeksInMonth.map((week, index) => (
-                    <MenuItem key={index} value={week}>
-                      {week.label}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </Box>
-              <Box mb={4}>
-                <Typography
-                  variant="h6"
-                  component="div"
-                  mb={2}
-                  textAlign="center"
-                  color="#388e3c"
-                >
-                  Consommation CPU
-                </Typography>
-                <ResponsiveContainer width="100%" height={400}>
-                  <LineChart
-                    data={cpuData}
-                    margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
-                  >
-                    <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis
-                      dataKey="timestamp"
-                      type="number"
-                      domain={["dataMin", "dataMax"]}
-                      tickFormatter={(timestamp) =>
-                        new Date(timestamp).toLocaleDateString("fr-FR")
-                      }
-                    />
-                    <YAxis
-                      domain={["auto", "auto"]}
-                      tickFormatter={(value) => `${value * 10}%`}
-                    />
-                    <Tooltip
-                      labelFormatter={(value) =>
-                        new Date(value).toLocaleDateString("fr-FR")
-                      }
-                      formatter={(value) => `${value * 10}%`}
-                    />
-                    <Legend />
-                    <Line
-                      type="monotone"
-                      dataKey="cpuUsage"
-                      stroke="#8884d8"
-                      dot={false}
-                    />
-                  </LineChart>
-                </ResponsiveContainer>
-              </Box>
-            </CardContent>
-          </Card>
-        </Box>
-      </Box>
-      <ToastContainer />
-    </LocalizationProvider>
+        {months.map((month) => (
+          <MenuItem key={month.value} value={month.value}>
+            {month.label}
+          </MenuItem>
+        ))}
+      </TextField>
+
+      {/* Sélection de la semaine */}
+      {selectedMonth && (
+        <TextField
+          select
+          label="Semaine"
+          value={selectedWeek ? weeksInMonth.findIndex(
+            (week) => week.startOfWeek.isSame(selectedWeek.startOfWeek)
+          ) : ''}
+          onChange={handleWeekChange}
+          fullWidth
+          margin="normal"
+        >
+          {weeksInMonth.map((week, index) => (
+            <MenuItem key={index} value={index}>
+              {`Du ${week.startOfWeek.format('DD MMM')} au ${week.endOfWeek.format('DD MMM')}`}
+            </MenuItem>
+          ))}
+        </TextField>
+      )}
+
+      {/* Charte des données CPU */}
+      <div style={{ width: '100%', height: 400 }}>
+        <ResponsiveContainer width="100%" height="100%">
+          <LineChart
+            data={cpuData}
+            margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
+          >
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis
+              dataKey="timestamp"
+              type="number"
+              domain={["dataMin", "dataMax"]}
+              tickFormatter={(timestamp) =>
+                new Date(timestamp).toLocaleDateString("fr-FR")
+              }
+            />
+            <YAxis
+              domain={["auto", "auto"]}
+              tickFormatter={(value) => `${value * 10}%`}
+            />
+            <Tooltip
+              labelFormatter={(value) =>
+                new Date(value).toLocaleDateString("fr-FR")
+              }
+              formatter={(value) => `${value * 10}%`}
+            />
+            <Legend />
+            <Line
+              type="monotone"
+              dataKey="cpuUsage"
+              stroke="#8884d8"
+              dot={false}
+            />
+          </LineChart>
+        </ResponsiveContainer>
+      </div>
+    </div>
   );
 };
 
