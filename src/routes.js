@@ -19,7 +19,7 @@ import Dashboard from "views/Dashboard.js";
 import PrometheusChart from "views/PrometheusChart.js";
 import CpuandRamChart from "views/CpuandRamChart.js";
 import Typography from "views/Typography.js";
-import UserProfile from "views/UserProfile.js";
+import ResourceConsumptionTracker from "views/ResourceConsumptionTracker.js";
 
 var routes = [
   {
@@ -38,16 +38,16 @@ var routes = [
     component: <CpuandRamChart />,
     layout: "/admin",
   },
-  /*
+  
   {
-    path: "/user-profile",
-    name: "User Profile",
+    path: "/ResourceConsumptionTracker",
+    name: "ResourceConsumptionTracker",
     rtlName: "ملف تعريفي للمستخدم",
     icon: "tim-icons icon-single-02",
-    component: <UserProfile />,
+    component: <ResourceConsumptionTracker />,
     layout: "/admin",
   },
-  */
+  
   /*
   {
     path: "/typography",
