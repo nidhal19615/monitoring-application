@@ -12,7 +12,6 @@ const ResourceConsumptionTracker = () => {
   const [selectedWeek, setSelectedWeek] = useState(null);
   const [cpuData, setCpuData] = useState([]);
   
-  // Liste des mois disponibles
   const months = [
     { value: '01', label: 'Janvier' },
     { value: '02', label: 'Février' },
@@ -28,9 +27,8 @@ const ResourceConsumptionTracker = () => {
     { value: '12', label: 'Décembre' }
   ];
 
-  // Fonction pour définir les semaines d'un mois sélectionné
   const getWeeksInMonth = (month) => {
-    const year = dayjs().year(); // Année actuelle
+    const year = dayjs().year(); 
     const startOfMonth = dayjs(`${year}-${month}-01`);
     const endOfMonth = startOfMonth.endOf('month');
     
@@ -50,7 +48,7 @@ const ResourceConsumptionTracker = () => {
   const handleMonthChange = (event) => {
     const month = event.target.value;
     setSelectedMonth(month);
-    setSelectedWeek(null); // Reset de la semaine lorsque le mois change
+    setSelectedWeek(null);
   };
 
   const handleWeekChange = (event) => {
@@ -67,30 +65,35 @@ const ResourceConsumptionTracker = () => {
         const startTimestamp = selectedWeek.startOfWeek.unix();
         const endTimestamp = selectedWeek.endOfWeek.unix();
 
-        const now = dayjs().unix();
-        if (endTimestamp > now) {
-          setCpuData([]);
-        } else {
-          const cpuResponse = await axios.get(
-            "http://98.66.205.79/api/v1/query_range",
-            {
-              params: {
-                query: "sum by (pod) (container_cpu_usage_seconds_total{image!=''})",
-                start: startTimestamp,
-                end: endTimestamp,
-                step: 60,
-              },
-            }
-          );
-          const cpuResult = cpuResponse.data.data.result;
+        console.log("Fetching data from", startTimestamp, "to", endTimestamp);
+
+        const cpuResponse = await axios.get(
+          "http://98.66.205.79/api/v1/query_range",
+          {
+            params: {
+              query: "sum by (pod) (container_cpu_usage_seconds_total{image!=''})",
+              start: startTimestamp,
+              end: endTimestamp,
+              step: 60,
+            },
+          }
+        );
+        
+        const cpuResult = cpuResponse.data.data.result;
+        console.log("API response:", cpuResult);
+
+        if (cpuResult && cpuResult.length > 0) {
           const formattedCpuData = cpuResult.flatMap((podData) =>
             podData.values.map(([timestamp, value]) => ({
               timestamp: timestamp * 1000,
               cpuUsage: parseFloat(value) / 100,
             }))
           );
+          console.log("Formatted CPU Data:", formattedCpuData);
           setCpuData(formattedCpuData);
-          console.log("Formatted CPU Data:", formattedCpuData); // Vérifiez ici les données
+        } else {
+          console.warn("No data found for the selected range");
+          setCpuData([]);
         }
       } catch (error) {
         console.error("Erreur lors de la récupération des données :", error);
@@ -100,14 +103,12 @@ const ResourceConsumptionTracker = () => {
     fetchData();
   }, [selectedWeek]);
 
-  // Options de semaines pour le mois sélectionné
   const weeksInMonth = selectedMonth ? getWeeksInMonth(selectedMonth) : [];
 
   return (
     <div>
       <h2>Suivi de la consommation des ressources</h2>
 
-      {/* Sélection du mois */}
       <TextField
         select
         label="Mois"
@@ -123,7 +124,6 @@ const ResourceConsumptionTracker = () => {
         ))}
       </TextField>
 
-      {/* Sélection de la semaine */}
       {selectedMonth && (
         <TextField
           select
@@ -143,7 +143,6 @@ const ResourceConsumptionTracker = () => {
         </TextField>
       )}
 
-      {/* Charte des données CPU */}
       <div style={{ width: '100%', height: 400 }}>
         <ResponsiveContainer width="100%" height="100%">
           <LineChart
