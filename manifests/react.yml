@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: react-app-container
-          image: nidhal2/pfe:1.0
+          image: nidhal2/pfe:2.0
           ports:
             - containerPort: 3000
 

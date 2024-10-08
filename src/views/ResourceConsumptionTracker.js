@@ -54,7 +54,7 @@ const ResourceConsumptionTracker = () => {
 
   return (
     <div>
-      <h2>CPU Usage Chart</h2>
+      <h2>Graphique d'utilisation du CPU</h2>
       <ResponsiveContainer width="100%" height={400}>
         <LineChart data={cpuData} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
           <CartesianGrid strokeDasharray="3 3" />
