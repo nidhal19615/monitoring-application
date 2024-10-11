@@ -14,31 +14,32 @@ jobs:
         uses: actions/checkout@v4
 
       - name: SonarQube Scan
-        run: |
-          sonar-scanner \
-            -Dsonar.projectKey=nidhal19615_monitoring-application_e29b7668-e594-4920-af70-4d7bcf98e825 \
-            -Dsonar.sources=. \
-            -Dsonar.host.url=http://your-sonarqube-url:9000 \
+        uses: sonarsource/sonar-scanner-action@v1
+        with:
+          args: >
+            -Dsonar.projectKey=nidhal19615_monitoring-application_e29b7668-e594-4920-af70-4d7bcf98e825
+            -Dsonar.sources=.
+            -Dsonar.host.url=http://20.19.152.44:9000
             -Dsonar.login=${{ secrets.SONAR_KEY }}
- # publish_image:
- #   runs-on: ubuntu-latest
+  # publish_image:
+  #   runs-on: ubuntu-latest
 
   #  steps:
-   #   - name: Checkout
-   #     uses: actions/checkout@v4
+  #   - name: Checkout
+  #     uses: actions/checkout@v4
 
 #      - name: build
- #       run: |
-  #        docker build --no-cache -t nidhal2/pfe:3.0 .
+#       run: |
+#        docker build --no-cache -t nidhal2/pfe:3.0 .
 
-   #   - name: publish
-    #    run: |
-     #     docker login -u nidhal2 -p ${{secrets.DOCKER_HUB_TOKEN}}
-      #    docker push nidhal2/pfe:3.0
+#   - name: publish
+#    run: |
+#     docker login -u nidhal2 -p ${{secrets.DOCKER_HUB_TOKEN}}
+#    docker push nidhal2/pfe:3.0
 
-  #    - name: "Login via Azure CLI"
-  #     id: azure_login
-  #     uses: azure/login@v1
+#    - name: "Login via Azure CLI"
+#     id: azure_login
+#     uses: azure/login@v1
 
 #        with:
 #          creds: ${{ secrets.AZURE_CREDENTIALS }}
