@@ -17,9 +17,13 @@
 */
 import Dashboard from "views/Dashboard.js";
 import PrometheusChart from "views/PrometheusChart.js";
-import CpuandRamChart from "views/CpuandRamChart.js";
-import Typography from "views/Typography.js";
-import ResourceConsumptionTracker from "views/ResourceConsumptionTracker.js";
+import CpuChart from "views/CpuChart.js";
+import CalculatepriceRAM from "views/CalculatepriceRAM.js";
+import  RamChart from "views/RamChart.js";
+
+import CalculatepriceCPU from "views/CalculatepriceCPU.js";
+
+
 
 var routes = [
   {
@@ -31,32 +35,41 @@ var routes = [
     layout: "/admin",
   },
   {
-    path: "/CpuandRamChart",
-    name: "CpuandRamChart",
+    path: "/CpuChart",
+    name: "CpuChart",
     rtlName: "إخطارات",
     icon: "tim-icons icon-bell-55",
-    component: <CpuandRamChart />,
+    component: <CpuChart />,
     layout: "/admin",
   },
   
   {
-    path: "/ResourceConsumptionTracker",
-    name: "ResourceConsumptionTracker",
+    path: "/RamChart",
+    name: "RamChart",
     rtlName: "ملف تعريفي للمستخدم",
     icon: "tim-icons icon-single-02",
-    component: <ResourceConsumptionTracker />,
+    component: <RamChart />,
     layout: "/admin",
   },
   
-  /*
+  
   {
-    path: "/typography",
-    name: "Typography",
+    path: "/CalculatepriceRAM",
+    name: "CalculatepriceRAM ",
     rtlName: "طباعة",
     icon: "tim-icons icon-align-center",
-    component: <Typography />,
+    component: <CalculatepriceRAM/>,
     layout: "/admin",
   },
-  */
+  
+  {
+    path: "/CalculatepriceCPU",
+    name: "CalculatepriceCPU ",
+    rtlName: "طباعة",
+    icon: "tim-icons icon-align-center",
+    component: <CalculatepriceCPU/>,
+    layout: "/admin",
+  },
+  
 ];
 export default routes;
