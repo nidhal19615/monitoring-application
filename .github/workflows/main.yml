@@ -6,21 +6,35 @@ on:
       - main
 
 jobs:
-  publish_image:
+  sonarQubeScan:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: build
+      - name: SonarQube Scan
         run: |
-          docker build --no-cache -t nidhal2/pfe:3.0 .
+          sonar-scanner \
+            -Dsonar.projectKey=nidhal19615_monitoring-application_e29b7668-e594-4920-af70-4d7bcf98e825 \
+            -Dsonar.sources=. \
+            -Dsonar.host.url=http://your-sonarqube-url:9000 \
+            -Dsonar.login=${{ secrets.SONAR_KEY }}
+ # publish_image:
+ #   runs-on: ubuntu-latest
 
-      - name: publish
-        run: |
-          docker login -u nidhal2 -p ${{secrets.DOCKER_HUB_TOKEN}}
-          docker push nidhal2/pfe:3.0
+  #  steps:
+   #   - name: Checkout
+   #     uses: actions/checkout@v4
+
+#      - name: build
+ #       run: |
+  #        docker build --no-cache -t nidhal2/pfe:3.0 .
+
+   #   - name: publish
+    #    run: |
+     #     docker login -u nidhal2 -p ${{secrets.DOCKER_HUB_TOKEN}}
+      #    docker push nidhal2/pfe:3.0
 
   #    - name: "Login via Azure CLI"
   #     id: azure_login
