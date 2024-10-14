@@ -7,7 +7,7 @@ on:
 
 jobs:
   sonarQubeScan:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
 
     steps:
       - name: Checkout
@@ -16,12 +16,13 @@ jobs:
       - name: SonarQube Scan
         run: |
           docker run --rm \
-            -e SONAR_HOST_URL=http://192.168.10.87:9001 \
+            -e SONAR_HOST_URL=http://192.168.10.87:9000 \
             -e SONAR_LOGIN=${{ secrets.SONAR_KEY }} \
             -v $(pwd):/usr/src \
             sonarsource/sonar-scanner-cli:latest \
             -Dsonar.projectKey=nidhal19615_monitoring-application_AZJ9vv0YA4FHz0QgS9S2 \
             -Dsonar.sources=/usr/src
+
   # publish_image:
   #   runs-on: ubuntu-latest
 
