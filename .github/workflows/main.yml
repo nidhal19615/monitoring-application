@@ -17,19 +17,20 @@ jobs:
         run: |
           docker run --rm \
             -e SONAR_HOST_URL=http://192.168.10.87:9000 \
-            -e SONAR_LOGIN=squ_70cc7692c405f3b506d0d6da4d820683b3065396 \
+            -e SONAR_LOGIN=${{ secrets.SONAR_TOKEN }} \
             -v $(pwd):/usr/src \
             sonarsource/sonar-scanner-cli:latest \
             -Dsonar.projectKey=nidhal19615_monitoring-application_AZJ9vv0YA4FHz0QgS9S2\
             -Dsonar.sources=/usr/src \
-            -Dsonar.login=squ_70cc7692c405f3b506d0d6da4d820683b3065396
+            -Dsonar.login=${{ secrets.SONAR_TOKEN }}
 
   # publish_image:
   #   runs-on: ubuntu-latest
 
-  #  steps:
-  #   - name: Checkout
-  #     uses: actions/checkout@v4
+#squ_70cc7692c405f3b506d0d6da4d820683b3065396
+#  steps:
+#   - name: Checkout
+#     uses: actions/checkout@v4
 
 #      - name: build
 #       run: |
