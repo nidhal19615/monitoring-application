@@ -63,3 +63,6 @@ jobs:
 #            manifests/react.yml
 #            manifests/postgres.yml
 #            manifests/keycloak.yml
+
+# cd ~/actions-runner
+#./run.sh
