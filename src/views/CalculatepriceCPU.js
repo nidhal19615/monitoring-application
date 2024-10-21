@@ -196,7 +196,7 @@ const CpuCostChart = () => {
                   'sum by (pod) (rate(container_cpu_usage_seconds_total{image!=""}[2y]))',
                 start: startTimestamp.unix(),
                 end: endTimestamp.unix(),
-                step: step, // Sampling interval (in seconds)
+                step: step, 
               },
             }
           );

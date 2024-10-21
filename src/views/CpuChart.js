@@ -160,6 +160,13 @@ const CpuChart = () => {
           const year = selectedYear || new Date().getFullYear();
           startTimestamp = dayjs(new Date(year, monthIndex, 1));
           endTimestamp = dayjs(new Date(year, monthIndex + 1, 0));
+          let nowtimestamp = dayjs(new Date)
+          console.log(nowtimestamp)
+          if (endTimestamp>nowtimestamp){
+            endTimestamp=nowtimestamp;
+            console.log("je suis la")
+          }
+          console.log(endTimestamp)
         } else if (filterType === "week" && selectedMonth && selectedWeek) {
           const monthIndex = monthMapping[selectedMonth];
           const year = selectedYear || new Date().getFullYear();
@@ -192,7 +199,7 @@ const CpuChart = () => {
             {
               params: {
                 query:
-                  'sum by (pod) (rate(container_cpu_usage_seconds_total{image!=""}[1y]))',
+                  'sum by (pod) (rate(container_cpu_usage_seconds_total{image!=""}[30d]))',
                 start: startTimestamp.unix(),
                 end: endTimestamp.unix(),
                 step: step, // Sampling interval (in seconds)
@@ -261,7 +268,7 @@ const CpuChart = () => {
       const podName = result.metric.pod;
       result.values.forEach((dataPoint) => {
         const timestamp = dataPoint[0] * 1000; // Keep timestamp as Unix time in milliseconds
-        const cpuUsage = parseFloat(dataPoint[1]) * 1000000;
+        const cpuUsage = parseFloat(dataPoint[1]) * 10000;
 
         if (!podData[podName]) {
           podData[podName] = [];

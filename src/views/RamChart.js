@@ -129,7 +129,9 @@ const RamChart = () => {
   };
 
   const calculateStep = (start, end) => {
+    console.log("1")
     const duration = end.diff(start, "seconds");
+    
     if (duration > 365 * 24 * 60 * 60) {
       // More than a year
       return "1d"; // 1 day
@@ -161,6 +163,13 @@ const RamChart = () => {
           const year = selectedYear || new Date().getFullYear();
           startTimestamp = dayjs(new Date(year, monthIndex, 1));
           endTimestamp = dayjs(new Date(year, monthIndex + 1, 0));
+          let nowtimestamp = dayjs(new Date)
+
+          if (endTimestamp>nowtimestamp){
+            endTimestamp=nowtimestamp;
+            console.log("je suis la")
+          }
+
         } else if (filterType === "week" && selectedMonth && selectedWeek) {
           const monthIndex = monthMapping[selectedMonth];
           const year = selectedYear || new Date().getFullYear();
@@ -195,7 +204,7 @@ const RamChart = () => {
                 query: "sum by (pod) (container_memory_usage_bytes{image!=''})",
                 start: startTimestamp.unix(),
                 end: endTimestamp.unix(),
-                step: step, // Sampling interval (in seconds)
+                step: 60 , // Sampling interval (in seconds)
               },
             }
           );
@@ -465,14 +474,14 @@ const RamChart = () => {
                       margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
                     >
                       <CartesianGrid strokeDasharray="3 3" />
+                     
                       <XAxis
                         dataKey="timestamp"
                         type="number"
                         domain={["dataMin", "dataMax"]}
-                        tickFormatter={(unixTime) => {
-                          const format = endDate.diff(startDate, "days") <= 1 ? "YYYY/MM/DD HH:mm" : "YYYY/MM/DD";
-                          return dayjs(unixTime).format(format);
-                        }}
+                        tickFormatter={(unixTime) =>
+                          dayjs(unixTime).format("YYYY/MM/DD HH:mm")
+                        }
                         tick={{ fontSize: 12 }}
                       />
                       <YAxis
