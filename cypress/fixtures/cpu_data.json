@@ -1,26 +1,27 @@
 {
-  "status": "success",
-  "data": {
-    "resultType": "matrix",
-    "result": [
-      {
-        "metric": {
-          "pod": "argocd-application-controller-0"
+    "status": "success",
+    "data": {
+      "resultType": "matrix",
+      "result": [
+        {
+          "metric": {
+            "pod": "argocd-application-controller-0"
+          },
+          "values": [
+            [1729534919, "0.088678400"],
+            [1729534979, "0.089010176"]
+          ]
         },
-        "values": [
-          [1729457744, "0.00008768665087041902"],
-          [1729457804, "0.00008772883552352135"]
-        ]
-      },
-      {
-        "metric": {
-          "pod": "another-pod-1"
-        },
-        "values": [
-          [1729457744, "0.00004567890123456789"],
-          [1729457804, "0.00005678901234567890"]
-        ]
-      }
-    ]
+        {
+          "metric": {
+            "pod": "another-pod-1"
+          },
+          "values": [
+            [1729534919, "0.045678901"],
+            [1729534979, "0.056789012"]
+          ]
+        }
+      ]
+    }
   }
-}
+  

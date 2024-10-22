@@ -1,12 +1,12 @@
-// cypress/integration/cpu_chart.spec.js
+// cypress/integration/ram_chart.spec.js
 
-describe("CPU Chart Component", () => {
+describe("Ram Chart Component", () => {
   beforeEach(() => {
-    cy.visit("http://98.66.240.17/admin/CpuChart"); // Adjust the path to where your component is rendered
+    cy.visit("http://98.66.240.17/admin/RamChart"); // Adjust the path to where your component is rendered
   });
 
-  it("should render the CPU Chart component", () => {
-    cy.contains("CPU Usage Chart", { timeout: 10000 }).should("exist");
+  it("should render the RAM Chart component", () => {
+    cy.contains("RAM Usage Chart", { timeout: 10000 }).should("exist");
   });
 
   it("should display filter options", () => {
@@ -48,15 +48,17 @@ describe("CPU Chart Component", () => {
     cy.get('[role="option"]').contains("Custom").click(); // Select 'Custom'
 
     // Interact with the DateTimePicker component
-    cy.contains("label", "Start Date & Time").parent().find("input").click();
-    cy.contains("label", "End Date & Time").parent().find("input").click();
+    cy.contains("label", "Start Date and Time").parent().find("input").click();
+    cy.contains("label", "End Date and Time").parent().find("input").click();
+    
   });
+ 
 
   it("should display loading spinner when fetching data", () => {
     cy.intercept("GET", "http://98.66.205.79/api/v1/query_range", {
       delay: 1000, ///Simulate network delay
-      fixture: "cpu_data.json", // Use fixture data for testing
-    }).as("fetchCpuData");
+      fixture: "ram_data.json", // Use fixture data for testing
+    }).as("fetchRamData");
 
     cy.get("#filter-type-select").click(); // Open the dropdown
     cy.get("ul > li").contains("Year").click(); // Select 'Year'
@@ -72,7 +74,7 @@ describe("CPU Chart Component", () => {
     cy.intercept("GET", "http://98.66.205.79/api/v1/query_range*", {
       statusCode: 500,
       body: { error: "Internal Server Error" },
-    }).as("fetchCpuDataError");
+    }).as("fetchRamDataError");
 
     cy.get("#filter-type-select").click(); // Open the dropdown
     cy.get("ul > li").contains("Year").click(); // Select 'Year'
@@ -80,7 +82,7 @@ describe("CPU Chart Component", () => {
     cy.get('[role="option"]').contains("2023").click(); // Select the year 2023
    
 
-    cy.wait("@fetchCpuDataError");
+    cy.wait("@fetchRamDataError");
     cy.get("p")
       .contains("Failed to fetch data. Please try again later.")
       .should("exist");
