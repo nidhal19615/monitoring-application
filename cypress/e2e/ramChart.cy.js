@@ -2,7 +2,7 @@
 
 describe("Ram Chart Component", () => {
   beforeEach(() => {
-    cy.visit("http://98.66.240.17/admin/RamChart"); // Adjust the path to where your component is rendered
+    cy.visit("http://localhost:3000/admin/RamChart"); // Adjust the path to where your component is rendered
   });
 
   it("should render the RAM Chart component", () => {
