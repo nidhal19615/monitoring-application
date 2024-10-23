@@ -16,13 +16,13 @@ jobs:
       - name: SonarQube Scan
         run: |
           docker run --rm \
-          -e SONAR_HOST_URL=http://localhost:9000\
-          -e SONAR_LOGIN=squ_70cc7692c405f3b506d0d6da4d820683b3065396 \
-          -v $(pwd):/usr/src \
-          sonarsource/sonar-scanner-cli:latest \
-          -Dsonar.projectKey=nidhal19615_monitoring-application_AZJ9vv0YA4FHz0QgS9S2 \
-          -Dsonar.sources=/usr/src \
-          -Dsonar.login=squ_70cc7692c405f3b506d0d6da4d820683b3065396
+            -e SONAR_HOST_URL=http://localhost:9000 \
+            -e SONAR_LOGIN=squ_70cc7692c405f3b506d0d6da4d820683b3065396 \
+            -v $(pwd):/usr/src \
+            sonarsource/sonar-scanner-cli:latest \
+           -Dsonar.projectKey=nidhal19615_monitoring-application_AZJ9vv0YA4FHz0QgS9S2 \
+           -Dsonar.sources=/usr/src \
+           -Dsonar.login=squ_70cc7692c405f3b506d0d6da4d820683b3065396
 
   publish_image:
     runs-on: ubuntu-latest
@@ -54,7 +54,7 @@ jobs:
 #        if: steps.azure_login.outcome == 'success'  # Only get credentials if Azure login was successful
 #        run: az aks get-credentials --resource-group ressource-pfe --name cluster-pfe --overwrite-existing
 
-#      - name: K8S Deploycd
+#      - name: K8S Deploy
 #        if: steps.azure_login.outcome == 'success'  # Only deploy if Azure login was successful
 #        uses: azure/k8s-deploy@v1
 #        with:
