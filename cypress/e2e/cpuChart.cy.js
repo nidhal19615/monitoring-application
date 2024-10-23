@@ -1,11 +1,22 @@
 // cypress/integration/cpu_chart.spec.js
 
 describe("CPU Chart Component", () => {
+
   beforeEach(() => {
-    cy.visit("http://localhost:3000/admin/CpuChart"); // Adjust the path to where your component is rendered
+
+
+    cy.visit("http://98.66.240.17/admin/CpuChart"); // Adjust the path to where your component is rendered
+    cy.origin('http://98.66.206.49', () => {
+      cy.get('#username').type('farid');
+      cy.get('#password').type('admin');
+      cy.get('form').submit();
+    });
   });
 
+  
   it("should render the CPU Chart component", () => {
+   
+
     cy.contains("CPU Usage Chart", { timeout: 10000 }).should("exist");
   });
 
